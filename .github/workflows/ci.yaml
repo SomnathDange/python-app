@@ -20,4 +20,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: sdange/python-app:${{ github.sha }}
+          tags: sdange/python-app:${{ github.sha::6}}
