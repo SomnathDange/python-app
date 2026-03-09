@@ -28,14 +28,16 @@ jobs:
 
   deploy:
     needs: docker
-    runs-on: self-hosted-kubernetes-runner
+    runs-on: self-hosted
     steps:
       -
         name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set short SHA
+      - 
+        name: Set short SHA
         run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-6)" >> $GITHUB_ENV
 
-      - name: Echo short SHA
-        run: echo "Deploying with image tag: ${{ env.SHORT_SHA }}"
+      - 
+        name: Echo short SHA
+        run: echo "Deploying with image tag ${{ env.SHORT_SHA }}"
