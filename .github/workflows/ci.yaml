@@ -33,6 +33,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install argocd
+        shell: bash
+        run: |
+          echo "Installing argocd"
+          curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x argocd
+          sudo mv argocd /usr/local/bin/
+
       - name: Argocd app sync
         shell: bash
         run: |
