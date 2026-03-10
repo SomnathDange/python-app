@@ -39,9 +39,8 @@ jobs:
         shell: bash
         run: |
           echo ${{needs.build.outputs.commit_id}}
-          # ensure pip is available
-          python3 -m pip install --upgrade pip || sudo apt-get update && sudo apt-get install -y python3-pip
-          pip install yq
+          # install a proper yq binary via apt instead of pip
+          sudo apt-get update && sudo apt-get install -y yq
           yq -Yi '.image.tag = "${{needs.build.outputs.commit_id}}"' charts/python-app/values.yaml
 
       - name: Commit changes
