@@ -1,11 +1,11 @@
-name: ci
+name: cicd
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
       -
@@ -27,17 +27,20 @@ jobs:
           tags: sdange/python-app:${{ env.SHORT_SHA }}
 
   deploy:
-    needs: docker
+    needs: build
     runs-on: self-hosted
     steps:
-      -
-        name: Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - 
-        name: Set short SHA
-        run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-6)" >> $GITHUB_ENV
-
-      - 
-        name: Echo short SHA
-        run: echo "Deploying with image tag ${{ env.SHORT_SHA }}"
+      - name: Argocd app sync
+        shell: bash
+        run: |
+          echo "Logging into argocd server"
+          argocd login argocd-server.argocd \
+            --insecure  \
+            --grpc-web \
+            --username admin \
+            --password  ${{ secrets.ARGOCD_PASSWORD }}
+          echo "Running argocd app sync"
+          argocd app sync python-app
