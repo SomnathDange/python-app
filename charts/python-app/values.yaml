@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: sdange/python-app
   pullPolicy: IfNotPresent
-  tag: "8631b8"
+  tag: "d77ef9"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
