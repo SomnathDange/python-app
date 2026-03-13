@@ -7,5 +7,5 @@ metadata:
     github.com/project-slug: SomnathDange/python-app
 spec:
   type: service
-  owner: development/Somanath.Dange@backstage.com
+  owner: development
   lifecycle: experimental
